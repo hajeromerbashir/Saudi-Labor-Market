@@ -34,17 +34,17 @@ This dashboard is designed for both general audiences and executive stakeholders
 ### 1. Overview (`نظرة عامة`)
 > A comprehensive summary of key Saudi labor market indicators (2021–2026), tracking workforce headcount, employment rates, unemployment trends, and regional participation.
 
-![Overview Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview)
+[Overview Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview)
 
 ### 2. Workforce Distribution (`توزيع القوى العاملة`)
 > A detailed breakdown of workforce composition by nationality, major occupational groups, and economic activities, alongside wages, weekly working hours, and graduate unemployment by field of study.
 
-![Workforce Distribution](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution)
+[Workforce Distribution](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution)
 
 ### 3. Vision 2030 (`رؤية 2030`)
 > Tracks national workforce progress toward Saudi Vision 2030 milestones in lowering Saudi unemployment, expanding Saudization, and raising female and private-sector participation.
 
-![Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030)
+[Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030)
 
 ---
 
@@ -55,11 +55,11 @@ This dashboard is designed for both general audiences and executive stakeholders
 * **Two-Tier DAX Architecture:** Separates base demographic `SWITCH` measures (`_... Value`) from visual-layer `LatestDate` wrappers, YoY time-intelligence calculations, dynamic Arabic chart titles, semantic KPI coloring, and first/last trend-line data labels.
 
 ### Project Documentation
-* **DAX Measures & UX Layer:** [`docs/dax-measures.md`](docs/dax-measures.md)
-* **Power Query (M) ETL Pipeline:** [`docs/power-query-etl.md`](docs/power-query-etl.md)
+* **DAX Measures & UX Layer:** [`docs/dax-measures.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)
+* **Power Query (M) ETL Pipeline:** [`docs/power-query-etl.md`]([docs/power-query-etl.md](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview))
 * **Arabic-to-English Data Dictionary:** [`data/data-dictionary.md`](data/data-dictionary.md)
 
-![Data Model](assets/data_model_star_schema.png)
+![Data Model]([assets/data_model_star_schema.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
 
 ---
 
