@@ -1,0 +1,222 @@
+
+*** A. Dynamic Visual Titles (10 Measures)
+Automatically appends the active `Gender & Nationality[Combined]` selection to chart headers so viewers never lose demographic context when slicing.
+
+**Representative Pattern:**
+```dax
+##1 Title - Employment % =
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"نسبة التوظيف" &
+IF(ISBLANK(Selectedgroup), "", " - " & Selectedgroup)
+
+##2 Title -General Unemployment = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"معدل البطالة العام" & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##3 Title - participation by area = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"المشاركة حسب المنطقة " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##4 Title - workforce = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"التوزيع النسبي لقوة العمل " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##5 Title - workers by economic sector = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"توزيع العاملين حسب النشاط الاقتصادي " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##6 Title - workers by profession = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"التوزيع النسبي حسب مجموعات المهن الرئيسية" & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##7 Title -wages by education = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"متوسط الأجر الشهري حسب المستوى التعليمي " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##8 Title -wages by gender & nationality = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+"متوسط الأجر الشهري حسب الجنس و الجنسية " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##9 Title - workers dist = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+" توزيع العاملين حسب الجنس و الجنسية " & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+##10 Title - Unemployment by education = 
+VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+RETURN
+" البطالة حسب المستوى التعليمي" & 
+IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
+
+// B. KPI Conditional Formatting (Hex Color Measures)
+Applies domain-aware semantic coloring (#3B6D11 Positive Green, #C62828 Alert Red, #8A94A0 Neutral Gray) to YoY KPI indicators.
+
+Standard Positive-Growth Pattern (also used for Color - Participation and Color - Private Sector):
+
+#1 Color - GOSI =
+VAR Change = [_YOY num GOSI]
+RETURN
+SWITCH(
+    TRUE(),
+    Change > 0, "#3B6D11",   -- Employment growth = positive
+    Change < 0, "#C62828",
+    "#8A94A0"
+)
+
+
+** Inverse Metric Pattern (a drop in unemployment is treated as a positive achievement):
+#2 Color - SA Unemployment =
+VAR Change = [_YOY SA Unemployment]
+RETURN
+SWITCH(
+    TRUE(),
+    Change < 0, "#3B6D11",   -- Lower unemployment = achievement
+    Change > 0, "#C62828",
+    "#8A94A0"
+)
+
+
+#3 Color - Participation = 
+VAR Change = [_YOY num Participation]
+RETURN
+SWITCH( TRUE(),
+    Change > 0,"#3B6D11" ,
+    Change < 0, "#C62828",
+    "#8A94A0"
+)
+
+
+#4 Color - Private Sector = 
+VAR Change = [_YOY PrivetSector]
+RETURN
+SWITCH( TRUE(),
+    Change > 0, "#3B6D11",
+    Change < 0, "#C62828",
+    "#8A94A0"
+)
+
+
+
+// C. First & Last Data Labels on Trend Lines (5 Measures)
+
+#1 Label - First & Last (SA Female PArticipation) =
+VAR CurrentVal  = [SA Female Participation (National)]
+VAR CurrentDate = MAX(Calender[Quarter Start])
+VAR DataQuarters =
+    FILTER(
+        ALLSELECTED(Calender[Quarter Lable], Calender[Quarter Start]),
+        NOT ISBLANK([SA Female Participation (National)])
+    )
+VAR MinDate = MINX(DataQuarters, Calender[Quarter Start])
+VAR MaxDate = MAXX(DataQuarters, Calender[Quarter Start])
+RETURN
+IF(
+    NOT ISBLANK(CurrentVal) &&
+    (CurrentDate = MinDate || CurrentDate = MaxDate),
+    CurrentVal,
+    BLANK()
+)
+
+
+#2 Label - First & Last (SA General Participation) = 
+VAR CurrentValue = [Dynamic SA Participation]
+VAR CurrentDate = MAX(Calender[Quarter Start])
+VAR DataQuarters = 
+    FILTER(
+        ALLSELECTED(Calender[Quarter Lable], Calender[Quarter Start]),
+        NOT ISBLANK([Dynamic SA Participation])
+    )
+VAR MinDate = MINX(DataQuarters, Calender[Quarter Start])
+VAR MaxDate = MAXX(DataQuarters, Calender[Quarter Start])
+RETURN
+IF(
+    NOT ISBLANK(CurrentValue) &&
+    (CurrentDate = MinDate || CurrentDate = MaxDate),
+    CurrentValue,
+    BLANK()
+)
+
+
+#3 Label - First & Last (SA Private) = 
+VAR CurrentValue = [_SA Private Sector Value]
+VAR CurrentDate = MAX(Calender[Quarter Start])
+VAR DataQuarters = 
+    FILTER(
+        ALLSELECTED(Calender),
+        NOT ISBLANK([_SA Private Sector Value])
+    )
+VAR MinDate = MINX(DataQuarters, Calender[Quarter Start])
+VAR MaxDate = MAXX(DataQuarters, Calender[Quarter Start])
+RETURN
+IF(
+    NOT ISBLANK(CurrentValue) && (CurrentDate = MinDate || CurrentDate = MaxDate),
+    CurrentValue,
+    BLANK()
+)
+
+
+#4 Label - First & Last (SA Public) = 
+VAR CurrentValue = [_SA Public Sector Value]
+VAR CurrentDate = MAX(Calender[Quarter Start])
+VAR DataQuarters = 
+    FILTER(
+        ALLSELECTED(Calender),
+        NOT ISBLANK([_SA Public Sector Value])
+    )
+VAR MinDate = MINX(DataQuarters, Calender[Quarter Start])
+VAR MaxDate = MAXX(DataQuarters, Calender[Quarter Start])
+RETURN
+IF(
+    NOT ISBLANK(CurrentValue) && (CurrentDate = MinDate || CurrentDate = MaxDate),
+    CurrentValue,
+    BLANK()
+)
+
+
+#5 Label - First & Last (SA Unemployment) = 
+VAR CurrentValue = [Dynamic SA Unemployment]
+VAR CurrentDate = MAX(Calender[Quarter Start])
+VAR DataQuarters = 
+    FILTER(
+        ALLSELECTED(Calender[Quarter Lable], Calender[Quarter Start]),
+        NOT ISBLANK([Dynamic SA Unemployment])
+    )
+VAR MinDate = MINX(DataQuarters, Calender[Quarter Start])
+VAR MaxDate = MAXX(DataQuarters, Calender[Quarter Start])
+RETURN
+IF(
+    NOT ISBLANK(CurrentValue) &&
+    (CurrentDate = MinDate || CurrentDate = MaxDate),
+    CurrentValue,
+    BLANK()
+)
+
+
+// D. Dynamic Quarter Range Labels
+
+# First Quarter Text =
+VAR MinDate = CALCULATE(MIN('البطالة'[الربع]), ALLSELECTED(Calender))
+RETURN
+"Q" & QUARTER(MinDate) & " " & YEAR(MinDate)
+
+
+# Last Quarter Text =
+VAR MaxDate = CALCULATE(MAX('البطالة'[الربع]), ALLSELECTED(Calender))
+RETURN
+"Q" & QUARTER(MaxDate) & " " & YEAR(MaxDate)
