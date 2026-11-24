@@ -36,17 +36,16 @@
 ### 1.  نظرة عامة
 > ملخص شامل لأبرز مؤشرات سوق العمل السعودي (2021–2026)، يوضح مسار أعداد العاملين ومعدلات التوظيف والبطالة والمشاركة حسب المناطق.
 
-[Overview Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview)
-
+[Overview Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview.png)
 ### 2. توزيع القوى العاملة
 > تحليل تفصيلي لتركيبة العاملين حسب الجنسية والمهن والأنشطة الاقتصادية، مع مقارنة الأجور وساعات العمل ومعدلات البطالة التعليمية.
 
-[Workforce Distribution](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution)
+[Workforce Distribution](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution.png)
 
 ### 3. رؤية 2030
 > متابعة تقدم الكوادر الوطنية نحو مستهدفات رؤية 2030 في خفض بطالة السعوديين، وتعزيز التوطين، ورفع مشاركة المرأة والقطاع الخاص.
 
-[Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030)
+[Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030.png)
 
 ---
 
