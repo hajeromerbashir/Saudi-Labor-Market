@@ -1,0 +1,321 @@
+A. Latest-Quarter KPI & Chart Wrappers
+These measures wrap the base _... Value switchers to lock snapshot visuals to the latest available quarter within the user's selected year.
+
+# Dynamic Employment Rate = 
+VAR LatestDate = CALCULATE(MAX('نسبة التوظيف'[الربع]))
+RETURN
+CALCULATE([_Employment Rate Value], Calender[Date] = LatestDate)
+
+# Dynamic General Participation = 
+VAR LatestDate = CALCULATE(MAX('التوزيع النسبي لقوة العمل'[الربع]))
+RETURN 
+CALCULATE([_General Participation Value], Calender[Date] = LatestDate)
+
+# Dynamic GOSI = 
+VAR LatestDate = CALCULATE(MAX('أرقام GOSI'[الربع]))
+RETURN
+CALCULATE([_GOSI Value], 'أرقام GOSI'[الربع] = LatestDate)
+
+# Dynamic LaborForce Dist = 
+VAR LatestDate = CALCULATE(MAX('التوزيع النسبي لقوة العمل'[الربع]))
+RETURN
+CALCULATE([_LaborForceDist Value], 'التوزيع النسبي لقوة العمل'[الربع] = LatestDate)
+
+# Dynamic PrivetSector = 
+VAR LatestDate = CALCULATE(MAX('قطاع خاص'[الربع]))
+RETURN 
+CALCULATE([_PrivateSector Value], Calender[Date] = LatestDate)
+
+# Dynamic Public Sector = 
+VAR LatestDate = CALCULATE(MAX('قطاع عام'[الربع]))
+RETURN
+CALCULATE([_Public Sector Value], Calender[Date] = LatestDate)
+
+# Dynamic Public Sector = 
+VAR LatestDate = CALCULATE(MAX('قطاع عام'[الربع]))
+RETURN
+CALCULATE([_Public Sector Value], Calender[Date] = LatestDate)
+
+# Dynamic SA Participation = 
+VAR LastDataDate = CALCULATE(MAX('معدل المشاركة'[الربع]))
+RETURN
+CALCULATE([_ SA Participation Value], 'Calender'[Date] = LastDataDate)
+
+# Dynamic SA PrivetSector = 
+VAR LatestDate = CALCULATE(MAX('قطاع خاص'[الربع]))
+RETURN 
+CALCULATE([_SA Private Sector Value], Calender[Date] = LatestDate)
+
+# Dynamic SA Unemployment = 
+VAR LatestDate = CALCULATE(MAX('البطالة'[الربع]))
+RETURN
+CALCULATE([_SA Unemployment Value], 'البطالة'[الربع] = LatestDate)
+
+# Dynamic Saudization = 
+VAR LatestDate = CALCULATE(MAX('القطاعات'[الربع]))
+RETURN
+CALCULATE([_Saudization Value], Calender[Date] = LatestDate)
+
+# Dynamic Total Participation By Area = 
+VAR LatestDate = CALCULATE(MAX('معدل المشاركة'[الربع]))
+RETURN
+CALCULATE([_Total Participation Value], Calender[Date] = LatestDate)
+
+# Dynamic Total Unemployment = 
+VAR LatestDate = CALCULATE(MAX('البطالة'[الربع]))
+RETURN 
+CALCULATE([_Total Unemployment Value], Calender[Date] = LatestDate)
+
+# Dynamic Total Unemployment = 
+VAR LatestDate = CALCULATE(MAX('البطالة'[الربع]))
+RETURN 
+CALCULATE([_Total Unemployment Value], Calender[Date] = LatestDate)
+
+// B. Specialized Visual & Breakdown Measures
+
+# Averag Wages
+Returns the latest-quarter average monthly wage using partial string matching (CONTAINSSTRING) on Gender & Nationality[Combined].
+
+Averag Wages = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('متوسط الأجر الشهري حسب الجنسية'[الربع]))
+VAR CurrentYear   = YEAR(LatestDate)
+VAR TargetQuarter = QUARTER(LatestDate)
+RETURN
+SWITCH(
+    TRUE(),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "ذكور"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  ذكور]),   'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "إناث"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إناث]),   'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "إجمالي"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إجمالي]), 'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "ذكور"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - ذكور]),         'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "إناث"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إناث]),         'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "إجمالي"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إجمالي]),       'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[إجمالي  - الكل]), 'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter)
+)
+
+
+# Dynamic BarChart - Unemployment =
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined])
+VAR LastDataDate  = CALCULATE(MAX('البطالة'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",      MAX('البطالة'[سعوديون - ذكور]),
+        "سعوديون - إناث",      MAX('البطالة'[سعوديون - إناث]),
+        "غير سعوديين - ذكور",  MAX('البطالة'[غير سعوديين -  ذكور]),
+        "غير سعوديين - إناث",  MAX('البطالة'[غير سعوديين - إناث])
+    ),
+    Calender[Date] = LastDataDate
+)
+
+
+# Dynamic Ocupations = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - ذكور]),
+        "سعوديون - إناث",        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - إناث]),
+        "سعوديون - إجمالي",      MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - إجمالي]),
+        "غير سعوديين - ذكور",    MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  ذكور]),
+        "غير سعوديين - إناث",    MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  إناث]),
+        "غير سعوديين - إجمالي",  MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  إجمالي]),
+        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[إجمالي  - الكل])
+    ),
+    'التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[الربع] = LatestDate
+)
+
+
+Dynamic Ocupations = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - ذكور]),
+        "سعوديون - إناث",        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - إناث]),
+        "سعوديون - إجمالي",      MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[سعوديون - إجمالي]),
+        "غير سعوديين - ذكور",    MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  ذكور]),
+        "غير سعوديين - إناث",    MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  إناث]),
+        "غير سعوديين - إجمالي",  MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[غير سعوديين -  إجمالي]),
+        MAX('التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[إجمالي  - الكل])
+    ),
+    'التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية'[الربع] = LatestDate
+)
+
+
+# Employees By Sector = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('القطاعات'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",        MAX('القطاعات'[سعوديون - ذكور %]),
+        "سعوديون - إناث",        MAX('القطاعات'[سعوديون - إناث %]),
+        "سعوديون - إجمالي",      MAX('القطاعات'[سعوديون - إجمالي %]),
+        "غير سعوديين - ذكور",    MAX('القطاعات'[غير سعوديين - ذكور %]),
+        "غير سعوديين - إناث",    MAX('القطاعات'[غير سعوديين - إناث %]),
+        "غير سعوديين - إجمالي",  MAX('القطاعات'[غير سعوديين - إجمالي %]),
+        MAX('القطاعات'[الإجمالي - الكل %])
+    ),
+    'القطاعات'[الربع] = LatestDate
+)
+
+
+# GOSI LaborForce Dist & GOSI LaborForce Rest
+
+Powers the nationality split donut chart by pairing the selected demographic share against the remainder of the total workforce
+
+GOSI LaborForce Dist = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+VAR LatestDate    = CALCULATE(MAX('أرقام GOSI'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",        MAX('أرقام GOSI'[سعوديون - ذكور]),
+        "سعوديون - إناث",        MAX('أرقام GOSI'[سعوديون - إناث]),
+        "سعوديون - إجمالي",      MAX('أرقام GOSI'[سعوديون - إجمالي]),
+        "غير سعوديين - ذكور",    MAX('أرقام GOSI'[غير سعوديين - ذكور]),
+        "غير سعوديين - إناث",    MAX('أرقام GOSI'[غير سعوديين - إناث]),
+        "غير سعوديين - إجمالي",  MAX('أرقام GOSI'[غير سعوديين - إجمالي]),
+        MAX('أرقام GOSI'[سعوديون - إجمالي])
+    ),
+    Calender[Date] = LatestDate
+)
+
+GOSI LaborForce Rest = 
+VAR LatestDate = CALCULATE(MAX('أرقام GOSI'[الربع]))
+VAR TotalWorkforce = 
+    CALCULATE(
+        MAX('أرقام GOSI'[الإجمالي - الكل]),
+        Calender[Date] = LatestDate
+    )
+RETURN
+TotalWorkforce - [GOSI LaborForce Dist]
+
+# Unemployment Dist by Major & Un
+Respect the active Year slicer via ALLSELECTED while anchoring all majors to the same latest quarter.
+
+Unemployment Dist by Major = 
+VAR LatestDate =
+    CALCULATE(
+        MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[الربع]),
+        ALLSELECTED('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى')
+    )
+RETURN
+CALCULATE(
+    [_Unemployment Dist by Major Value],
+    'التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[الربع] = LatestDate
+)
+
+
+Unemployment Rate by Major = 
+VAR LatestDate =
+    CALCULATE(
+        MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[الربع]),
+        ALLSELECTED('معدل البطالة للحاصلين على دبلوم فأعلى')
+    )
+RETURN
+CALCULATE(
+    [_Unemployment Rate by Major Value],
+    'معدل البطالة للحاصلين على دبلوم فأعلى'[الربع] = LatestDate
+)
+
+
+# Wages By Level of Education & Education Rank
+
+Wages By Level of Education = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('الأجر حسب التعليم'[الربع]))
+RETURN
+CALCULATE(
+    SWITCH(
+        SelectedGroup,
+        "سعوديون - ذكور",        MAX('الأجر حسب التعليم'[سعوديون - ذكور]),
+        "سعوديون - إناث",        MAX('الأجر حسب التعليم'[سعوديون - إناث]),
+        "سعوديون - إجمالي",      MAX('الأجر حسب التعليم'[سعوديون - إجمالي]),
+        "غير سعوديين - ذكور",    MAX('الأجر حسب التعليم'[غير سعوديين -  ذكور]),
+        "غير سعوديين - إناث",    MAX('الأجر حسب التعليم'[غير سعوديين -  إناث]),
+        "غير سعوديين - إجمالي",  MAX('الأجر حسب التعليم'[غير سعوديين -  إجمالي]),
+        MAX('الأجر حسب التعليم'[إجمالي  - الكل])
+    ),
+    'الأجر حسب التعليم'[الربع] = LatestDate
+)
+
+Education Rank = 
+SWITCH(
+    SELECTEDVALUE('الأجر حسب التعليم'[المستوى التعليمي]),
+    "دكتوراة", 1,
+    "ماجستير أو ما يعادلها", 2,
+    "بكالوريوس أو ما يعادلها", 3,
+    "دبلوم متوسط", 4,
+    "دبلوم مشارك", 5,
+    "تعليم ثانوي (عام أو مهني)", 6,
+    "تعليم متوسط (عام أو مهني)", 7,
+    "تعليم ابتدائي", 8,
+    "تعليم الطفولة المبكرة", 9,
+    "لا يوجد شهادة تعليمية", 10
+)
+
+//C. Formatted YoY KPI Text Labels
+
+Displays directional arrows (▲ / ▼) with localized Arabic percentage-point (نقطة) or % formatting inside KPI reference labels.
+
+# YOY Change - GOSI = 
+VAR Change = [_YOY num GOSI]
+RETURN
+SWITCH(
+    TRUE(),
+    Change > 0, "▲ " & FORMAT(Change, "0.0 %"),
+    Change < 0, "▼ " & FORMAT(ABS(Change), "0.0 %"),
+    NOT ISBLANK(Change), "—",
+    BLANK()
+)
+
+
+# YOY Change - Participation = 
+VAR Change = [_YOY num Participation]
+RETURN
+SWITCH(
+    TRUE(),
+    Change > 0, "▲ " & FORMAT(Change, "0.00") & " نقطة",
+    Change < 0, "▼ " & FORMAT(ABS(Change), "0.00") & " نقطة",
+    NOT ISBLANK(Change), "—",
+    BLANK()
+)
+
+
+# YOY Change - Private Sector = 
+VAR Change = [_YOY PrivetSector]
+RETURN
+SWITCH(
+    TRUE(),
+    Change > 0, "▲ " & FORMAT(Change, "0.0") & " نقطة",
+    Change < 0, "▼ " & FORMAT(ABS(Change), "0.0") & " نقطة",
+    NOT ISBLANK(Change), "—",
+    BLANK()
+)
+
+
+# YOY Change - SA Unemloyment = 
+VAR Change = [_YOY SA Unemployment]
+RETURN 
+SWITCH(
+    TRUE(),
+    Change > 0, "▲ " & FORMAT(Change, "0.0") & " نقطة",
+    Change < 0, "▼ " & FORMAT(ABS(Change), "0.0") & " نقطة",
+    NOT ISBLANK(Change), "—",
+    BLANK()
+)
