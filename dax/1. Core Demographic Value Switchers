@@ -1,0 +1,110 @@
+**_Employment Rate Value**
+Dynamically selects the employment rate column based on independent Nationality and Gender slicer selections, defaulting Gender to `"إجمالي"` when unfiltered.
+```dax
+_Employment Rate Value = 
+VAR SelectedNat = SELECTEDVALUE('Gender & Nationality'[Nationality], "الكل")
+VAR SelectedGen = SELECTEDVALUE('Gender & Nationality'[Gender], "إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedNat = "سعوديون"     && SelectedGen = "ذكور",   MAX('نسبة التوظيف'[سعوديون -  ذكور]),
+    SelectedNat = "سعوديون"     && SelectedGen = "إناث",   MAX('نسبة التوظيف'[سعوديون -  إناث]),
+    SelectedNat = "سعوديون"     && SelectedGen = "إجمالي", MAX('نسبة التوظيف'[سعوديون -  إجمالي]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "ذكور",   MAX('نسبة التوظيف'[غير سعوديين -  ذكور]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "إناث",   MAX('نسبة التوظيف'[غير سعوديين -  إناث]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "إجمالي", MAX('نسبة التوظيف'[غير سعوديين -  إجمالي]),
+    MAX('نسبة التوظيف'[الإجمالي -  الكل])
+)
+
+**_GOSI Value**
+Returns the number of GOSI-registered workers matching the selected demographic group.
+_GOSI Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('أرقام GOSI'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('أرقام GOSI'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('أرقام GOSI'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('أرقام GOSI'[غير سعوديين - ذكور]),
+    "غير سعوديين - إناث",    MAX('أرقام GOSI'[غير سعوديين - إناث]),
+    "غير سعوديين - إجمالي",  MAX('أرقام GOSI'[غير سعوديين - إجمالي]),
+    MAX('أرقام GOSI'[الإجمالي - الكل])
+)
+
+**_LaborForceDist Value**
+Returns the relative distribution of the population in/outside the labor force for the selected group.
+_LaborForceDist Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('التوزيع النسبي لقوة العمل'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('التوزيع النسبي لقوة العمل'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('التوزيع النسبي لقوة العمل'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('التوزيع النسبي لقوة العمل'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('التوزيع النسبي لقوة العمل'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('التوزيع النسبي لقوة العمل'[غير سعوديين -  إجمالي]),
+    MAX('التوزيع النسبي لقوة العمل'[إجمالي  - الكل])
+)
+
+**_Total Participation Value**
+Returns the labor force participation rate across all nationality and gender combinations. (Fixed Non-Saudi Male column reference.)
+_Total Participation Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('معدل المشاركة'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('معدل المشاركة'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('معدل المشاركة'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('معدل المشاركة'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('معدل المشاركة'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('معدل المشاركة'[غير سعوديين -  إجمالي]),
+    MAX('معدل المشاركة'[إجمالي  - الكل])
+)
+
+**_ SA Participation Value**
+Isolates the Saudi labor force participation rate for Vision 2030 tracking visuals.
+_ SA Participation Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور", MAX('معدل المشاركة'[سعوديون - ذكور]),
+    "سعوديون - إناث", MAX('معدل المشاركة'[سعوديون - إناث]),
+    MAX('معدل المشاركة'[سعوديون - إجمالي])
+)
+
+**_Wages Value**
+Returns the average monthly wage (SAR) by selected nationality and gender.
+_Wages Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إجمالي]),
+    MAX('متوسط الأجر الشهري حسب الجنسية'[إجمالي  - الكل])
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
