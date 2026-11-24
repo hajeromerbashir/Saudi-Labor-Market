@@ -1,0 +1,71 @@
+
+All raw source datasets are published in Arabic by the **General Authority for Statistics (GASTAT)** and the **General Organization for Social Insurance (GOSI)** covering **Q1 2021 – Q2 2026**. This dictionary translates every filename, table structure, and recurring column header for non-Arabic readers and reviewers.
+
+---
+
+## 1. Core Consolidated Workbook (`Saudi Labor Market.xlsx`)
+
+The primary workbook containing core quarterly time-series tables. Only active sheets used by the semantic model are loaded into Power BI; legacy prototype sheets from an earlier Q1 2025 draft were pruned during model optimization.
+
+| Arabic Sheet Name | English Translation | Granularity / Structure | Description & Role in Dashboard |
+| :--- | :--- | :--- | :--- |
+| `البطالة` | **Unemployment Rate** | Quarterly (Q1 2021 – Q2 2026) | Overall and Saudi unemployment rates (%) by nationality and gender. Drives macro KPIs, trend lines, and the Vision 2030 `7%` target tracker. |
+| `نسبة التوظيف` | **Employment-to-Population Ratio** | Quarterly (Q1 2021 – Q2 2026) | Share of the working-age population currently employed (%), segmented by nationality and gender. |
+| `أرقام GOSI` | **GOSI Registered Workers** | Quarterly (Q1 2020 – Q2 2026) | Absolute headcount of employed individuals registered under GOSI by nationality and gender. Powers total workforce KPIs, YoY growth, and nationality split. |
+| `المشاركة` | **Labor Force Participation Rate (National)** | Quarterly (Q1 2021 – Q2 2026) | National-level participation rate (%) by nationality and gender, including Saudi female participation tracked against the `40%` Vision 2030 target. |
+
+*Legacy sheets excluded from the final Power BI model:* `معدل بطالة الشباب` (Youth Unemployment), `المشتغلون` (Employed Relative Distribution), `المنطقة الإدارية` (Single-quarter Regional Snapshot), `الأجور حسب الجنسية` (Static Wages by Nationality), `الأجور حسب التعليم` (Static Wages by Education), `ساعات العمل` (Legacy Working Hours), and `المؤشرات KPIs` (Pre-calculated KPI Sheet).
+
+---
+
+## 2. Standalone Annual & Single-Sheet Workbooks
+
+Multi-year Excel files structured with one sheet per year (`2021`–`2025`) or a single consolidated time-series tab.
+
+| Arabic Filename | English Translation | Sheet Structure | Description |
+| :--- | :--- | :--- | :--- |
+| `معدل مشاركة القوى العاملة.xlsx` | **Labor Force Participation by Region** | Annual sheets (`2021`–`2025`) | Quarterly participation rates (%) broken down across Saudi Arabia's 13 administrative regions, nationality, and gender. |
+| `متوسط الأجر الشهري حسب الجنسية.xlsx` | **Average Monthly Wages by Nationality** | Annual sheets (`2021`–`2025`) | Quarterly average monthly wages (SAR) segmented by nationality and gender. |
+| `متوسط الأجر حسب المستوى التعليمي.xlsx` | **Average Monthly Wages by Education Level** | Annual sheets (`2021`–`2025`) | Quarterly average monthly wages (SAR) across education tiers (No degree through Doctorate). |
+| `متوسط الأجر الشهري حسب الفئة العمرية.xlsx` | **Average Monthly Wages by Age Group** | Annual sheets | Average monthly wages (SAR) segmented by age bracket, nationality, and gender. |
+| `متوسط ساعات العمل.xlsx` | **Average Weekly Working Hours** | Single sheet (`متوسط ساعات العمل`) | Quarterly average usual weekly working hours (2021–2025) comparing Saudi and Non-Saudi workers by gender. |
+| `التوزيع النسبي للسكان في قوة العمل.xlsx` | **Relative Distribution of Population in Labor Force** | Multi-period (`التوزيع النسبي لقوة العمل`) | Percentage split of the working-age population inside vs. outside the labor force. |
+| `التوزيع النسبي للمشتغلين حسب مجموعات المهن الرئيسية.xlsx` | **Employed Distribution by Major Occupational Groups** | Multi-period | Percentage distribution of employed workers across standard major occupation categories (e.g., Professionals, Services & Sales). |
+| `التوزيع النسبي للمشتغلين حسب المستوى التعليمي.xlsx` | **Employed Distribution by Education Level** | Multi-period | Percentage breakdown of employed workers by highest educational attainment. |
+| `البطالة حسب المنطقة الإدارية.xlsx` | **Unemployment Rate by Administrative Region** | Multi-period | Regional unemployment rates (%) across the 13 administrative provinces. |
+
+---
+
+## 3. Quarterly-Sheet Workbooks & Sectoral Tables
+
+Workbooks stored with separate quarterly tabs (consolidated via Power Query `Table.Combine`) and sectoral split tables used in Vision 2030 and graduate unemployment visuals.
+
+| Arabic Filename / Table Name | English Translation | Sheet Structure | Description |
+| :--- | :--- | :--- | :--- |
+| `القطاعات.xlsx` | **Economic Sectors & Saudization** | Quarterly sheets | Distribution of workers and Saudization rates (`%`) across major economic activities (e.g., Wholesale & Retail, Construction, Education, Health). |
+| `التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى` | **Unemployment Distribution by Academic Major (Diploma+)** | Quarterly sheets | Percentage share of unemployed graduates (Diploma and above) across academic fields (e.g., Business & Law, Education). |
+| `معدل البطالة للحاصلين على دبلوم فأعلى` | **Unemployment Rate by Academic Major (Diploma+)** | Quarterly sheets | Unemployment rate (%) within each academic specialization for Diploma-and-above holders. |
+| `قطاع خاص` | **Private Sector Employment** | Quarterly | Private-sector employment share (%) by nationality and gender, tracking Vision 2030 private-sector growth. |
+| `قطاع عام` | **Public Sector Employment** | Quarterly | Public-sector employment share (%) by nationality and gender, used to measure the structural shift from public to private employment. |
+
+---
+
+## 4. Common Arabic Column Dictionary
+
+Most GASTAT and GOSI fact tables share a standardized wide-format schema. Use this reference to interpret raw columns and DAX measure references:
+
+| Arabic Column Header | English Meaning | Data Type |
+| :--- | :--- | :--- |
+| `الربع` | Quarter start date (e.g., `2021-01-01` = Q1 2021) | `Date` |
+| `المنطقة` / `المنطقة الإدارية` | Administrative Region (13 Saudi provinces) | `Text` |
+| `المستوى التعليمي` | Educational Attainment Level | `Text` |
+| `النشاط الاقتصادي` | Economic Activity / Industry Sector | `Text` |
+| `سعوديون - ذكور` | Saudis – Male | `Number / %` |
+| `سعوديون - إناث` | Saudis – Female | `Number / %` |
+| `سعوديون - إجمالي` | Saudis – Total | `Number / %` |
+| `غير سعوديين - ذكور` | Non-Saudis – Male | `Number / %` |
+| `غير سعوديين - إناث` | Non-Saudis – Female | `Number / %` |
+| `غير سعوديين - إجمالي` | Non-Saudis – Total | `Number / %` |
+| `الإجمالي - ذكور` / `إجمالي - ذكور` | Overall – Male | `Number / %` |
+| `الإجمالي - إناث` / `إجمالي - إناث` | Overall – Female | `Number / %` |
+| `الإجمالي - الكل` / `إجمالي - الكل` | Overall – Grand Total | `Number / %` |
