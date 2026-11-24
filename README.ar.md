@@ -49,6 +49,8 @@
 
 ### 4. نموذج البيانات
 [Data Model](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
+
+
 ---
 
 ## البنية التقنية والوثائق المساندة
