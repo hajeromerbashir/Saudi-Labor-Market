@@ -55,8 +55,8 @@ This dashboard is designed for both general audiences and executive stakeholders
 * **Two-Tier DAX Architecture:** Separates base demographic `SWITCH` measures (`_... Value`) from visual-layer `LatestDate` wrappers, YoY time-intelligence calculations, dynamic Arabic chart titles, semantic KPI coloring, and first/last trend-line data labels.
 
 ### Project Documentation
-* **DAX Measures & UX Layer:** [`docs/dax-measures.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)
-* **Power Query (M) ETL Pipeline:** [`docs/power-query-etl.md`]([docs/power-query-etl.md](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview))
+* **DAX Measures & UX Layer:** [`Saudi-Labor-Market/dax.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)
+* **Power Query (M) ETL Pipeline:** [`Saudi-Labor-Market/power-query-etl.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview)]
 * **Arabic-to-English Data Dictionary:** [`data/data-dictionary.md`](data/data-dictionary.md)
 
 ![Data Model]([assets/data_model_star_schema.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
