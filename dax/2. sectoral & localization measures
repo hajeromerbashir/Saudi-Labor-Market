@@ -1,0 +1,89 @@
+## _PrivateSector Value
+Returns overall private-sector employment metrics by demographic group.
+_PrivateSector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('قطاع خاص'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('قطاع خاص'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('قطاع خاص'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('قطاع خاص'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('قطاع خاص'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('قطاع خاص'[غير سعوديين -  إجمالي]),
+    MAX('قطاع خاص'[إجمالي  - الكل])
+)
+
+## _Public Sector Value**
+Returns overall public sector employment metrics by demographic group. (Fixed Non-Saudi Total column reference.)
+
+_Public Sector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('قطاع عام'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('قطاع عام'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('قطاع عام'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('قطاع عام'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('قطاع عام'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('قطاع عام'[غير سعوديين -  إجمالي]),
+    MAX('قطاع عام'[إجمالي  - الكل])
+)
+
+## _SA Private Sector Value & _SA Public Sector Value
+Track Saudi-only share across private vs. public sectors for Vision 2030 structural shift analysis.
+
+_SA Private Sector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "سعوديون - ذكور", MAX('قطاع خاص'[سعوديون - ذكور]),
+    SelectedGroup = "سعوديون - إناث", MAX('قطاع خاص'[سعوديون - إناث]),
+    MAX('قطاع خاص'[سعوديون - إجمالي])
+)
+
+_SA Public Sector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "سعوديون - ذكور", MAX('قطاع عام'[سعوديون - ذكور]),
+    SelectedGroup = "سعوديون - إناث", MAX('قطاع عام'[سعوديون - إناث]),
+    MAX('قطاع عام'[سعوديون - إجمالي])
+)
+
+## _Saudization Value
+Returns the Saudization percentage in targeted economic sectors.
+_Saudization Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "سعوديون - ذكور", MAX('القطاعات'[سعوديون - ذكور %]),
+    SelectedGroup = "سعوديون - إناث", MAX('القطاعات'[سعوديون - إناث %]),
+    MAX('القطاعات'[سعوديون - إجمالي %])
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
