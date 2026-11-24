@@ -52,10 +52,10 @@ RETURN
 "متوسط الأجر الشهري حسب الجنس و الجنسية " & 
 IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
 
-##9 Title - workers dist = 
+##9 Title - workers by gender & nationality = 
 VAR Selectedgroup = SELECTEDVALUE('Gender & Nationality'[Combined])
 RETURN
-" توزيع العاملين حسب الجنس و الجنسية " & 
+"توزيع العاملين حسب الجنس والجنسية " & 
 IF(ISBLANK(Selectedgroup),""," - " & Selectedgroup)
 
 ##10 Title - Unemployment by education = 
@@ -215,8 +215,9 @@ VAR MinDate = CALCULATE(MIN('البطالة'[الربع]), ALLSELECTED(Calender)
 RETURN
 "Q" & QUARTER(MinDate) & " " & YEAR(MinDate)
 
-
 # Last Quarter Text =
 VAR MaxDate = CALCULATE(MAX('البطالة'[الربع]), ALLSELECTED(Calender))
 RETURN
 "Q" & QUARTER(MaxDate) & " " & YEAR(MaxDate)
+
+
