@@ -1,0 +1,40 @@
+
+
+### `Calender` (Date Dimension)
+Generates a continuous daily calendar spanning `2021-01-01` to `2026-12-31` with quarterly helper columns to link all quarterly GASTAT and GOSI fact tables cleanly.
+
+```dax
+Calender = CALENDAR(DATE(2021, 1, 1), DATE(2026, 12, 31))
+
+Year = YEAR(Calender[Date])
+
+Quarter Number = QUARTER(Calender[Date])
+
+Quarter Lable = "Q" & QUARTER(Calender[Date]) & " " & YEAR(Calender[Date])
+
+Quarter Start = 
+DATE(
+    YEAR(Calender[Date]),
+    (QUARTER(Calender[Date]) - 1) * 3 + 1,
+    1
+)
+
+** (Tip: Sort Quarter Lable by Quarter Start so chronological x-axes render in proper order rather than alphabetically.)
+
+## Gender & Nationality (Disconnected Slicer Parameter Table)
+A custom DATATABLE used to drive unified nationality and gender filtering across wide-format fact tables via SWITCH measures.
+
+Gender & Nationality = DATATABLE(
+    "Nationality", STRING,
+    "Gender", STRING,
+    "Combined", STRING,
+    {
+        {"سعوديون",     "ذكور",   "سعوديون - ذكور"},
+        {"سعوديون",     "إناث",   "سعوديون - إناث"},
+        {"سعوديون",     "إجمالي", "سعوديون - إجمالي"},
+        {"غير سعوديين", "ذكور",   "غير سعوديين - ذكور"},
+        {"غير سعوديين", "إناث",   "غير سعوديين - إناث"},
+        {"غير سعوديين", "إجمالي", "غير سعوديين - إجمالي"},
+        {"الكل",        "الكل",   "الإجمالي - الكل"}
+    }
+)
