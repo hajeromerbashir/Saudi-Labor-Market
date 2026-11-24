@@ -36,3 +36,35 @@ let
     })
 in
     TypedColumns
+
+
+# B. Standard Fact Table Cleaning (Example: البطالة)
+
+let
+    Source = Excel.Workbook(File.Contents(FilePath & "Saudi Labor Market.xlsx"), null, true),
+    SheetData = Source{[Item="البطالة", Kind="Sheet"]}[Data],
+    PromotedHeaders = Table.PromoteHeaders(SheetData, [PromoteAllScalars=true]),
+    FilteredNulls = Table.SelectRows(PromotedHeaders, each [الربع] <> null),
+    ChangedTypes = Table.TransformColumnTypes(FilteredNulls, {
+        {"الربع", type date},
+        {"سعوديون - ذكور", type number},
+        {"سعوديون - إناث", type number},
+        {"سعوديون - إجمالي", type number},
+        {"الإجمالي - الكل", type number}
+    })
+in
+    ChangedTypes
+
+
+3. Data Quality Issues Resolved During ETL
+Inconsistent Column Spacing: Standardized Arabic column headers with double spaces around hyphens across different yearly releases.
+
+Spelling Variations Across Years: Unified region and education labels (e.g., harmonizing الحدود الشماليه / الحدود الشمالية and aligning legacy vs. revised education categories) so slicers and charts aggregate accurately.
+
+Legacy Sheet Pruning: Audited and removed seven unused prototype sheets from the initial 2025 draft workbook (Saudi Labor Market.xlsx) so only active fact tables load into the final semantic model.
+"""
+
+data_dict_md = """# Data Dictionary & Dataset Descriptions
+
+All raw source datasets are published in Arabic by the General Authority for Statistics (GASTAT) and the General Organization for Social Insurance (GOSI) covering Q1 2021 – Q2 2026. This dictionary translates every filename, table structure, and recurring column header for non-Arabic readers and reviewers.
+
