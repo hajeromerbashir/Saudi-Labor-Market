@@ -76,20 +76,30 @@ SWITCH(
     MAX('معدل المشاركة'[سعوديون - إجمالي])
 )
 
-## _Wages Value
-Returns the average monthly wage (SAR) by selected nationality and gender.
-_Wages Value = 
+##Averag Wages
+Returns the latest-quarter average monthly wage for the Wages_by_nationality bar chart, using partial string matching (CONTAINSSTRING) on Gender & Nationality[Combined].
+
+Averag Wages = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+VAR LatestDate    = CALCULATE(MAX('متوسط الأجر الشهري حسب الجنسية'[الربع]))
+VAR CurrentYear   = YEAR(LatestDate)
+VAR TargetQuarter = QUARTER(LatestDate)
 RETURN
 SWITCH(
-    SelectedGroup,
-    "سعوديون - ذكور",        MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - ذكور]),
-    "سعوديون - إناث",        MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إناث]),
-    "سعوديون - إجمالي",      MAX('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إجمالي]),
-    "غير سعوديين - ذكور",    MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  ذكور]),
-    "غير سعوديين - إناث",    MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إناث]),
-    "غير سعوديين - إجمالي",  MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إجمالي]),
-    MAX('متوسط الأجر الشهري حسب الجنسية'[إجمالي  - الكل])
+    TRUE(),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "ذكور"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  ذكور]),   'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "إناث"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إناث]),   'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين") && CONTAINSSTRING(SelectedGroup, "إجمالي"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إجمالي]), 'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "ذكور"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - ذكور]),         'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "إناث"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إناث]),         'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CONTAINSSTRING(SelectedGroup, "سعوديون") && CONTAINSSTRING(SelectedGroup, "إجمالي"),
+        CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[سعوديون - إجمالي]),       'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter),
+    CALCULATE(SELECTEDVALUE('متوسط الأجر الشهري حسب الجنسية'[إجمالي  - الكل]), 'Calender'[Year] = CurrentYear, 'Calender'[Quarter Number] = TargetQuarter)
 )
 
 
