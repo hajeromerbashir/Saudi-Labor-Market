@@ -57,9 +57,9 @@ This dashboard is designed for both general audiences and executive stakeholders
 ### Project Documentation
 * **DAX Measures & UX Layer:** [`Saudi-Labor-Market/dax.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)
 * **Power Query (M) ETL Pipeline:** [`Saudi-Labor-Market/power-query-etl.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview)]
-* **Arabic-to-English Data Dictionary:** [`data/data-dictionary.md`](data/data-dictionary.md)
+* **Arabic-to-English Data Dictionary:** [`Saudi-Labor-Market/dataset/# Data Dictionary & Dataset Description.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/dataset/%23%20Data%20Dictionary%20%26%20Dataset%20Descriptions))
 
-![Data Model]([assets/data_model_star_schema.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
+[Data Model](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
 
 ---
 
