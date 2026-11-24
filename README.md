@@ -1,2 +1,98 @@
-# Saudi-Labor-Market
-Interactive Power BI dashboard analyzing the evolution of the Saudi Labor Market (2021–2026) and tracking progress toward Saudi Vision 2030 targets using GASTAT & GOSI data.
+<div align="right">
+
+**English** | [العربية](README.ar.md)
+
+</div>
+
+# Saudi Labor Market Transformation Dashboard (2021–2026)
+
+![images]([https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/images))
+![DAX](https://img.shields.io/badge/DAX-Dynamic%20Measures-1D623D?style=for-the-badge)
+![Power Query](https://img.shields.io/badge/Power%20Query-ETL-2E936C?style=for-the-badge)
+![Vision 2030](https://img.shields.io/badge/Saudi%20Vision-2030-005430?style=for-the-badge)
+
+An end-to-end **Power BI** analytics project tracking the structural evolution of the **Saudi Labor Market from Q1 2021 to Q2 2026** and evaluating national progress against **Saudi Vision 2030** targets.
+
+---
+
+## Business Objectives
+
+This dashboard is designed for both general audiences and executive stakeholders to answer two core questions:
+1. **Market Evolution:** How have employment levels, wages, regional participation, and workforce demographics evolved between 2021 and 2026?
+2. **Vision 2030 Progress:** How close is the Kingdom to achieving its strategic localization, unemployment, and female empowerment targets?
+
+---
+
+## Key Executive Findings (Q1 2021 – Q2 2026)
+
+| Pillar | Headline Metric | Strategic Insight |
+| :--- | :---: | :--- |
+| **Saudi Unemployment** | **`6.50%`** | Declined from **12.17%** (Q1 2021) to **6.50%** (Q2 2026), surpassing the Vision 2030 target of **7%** ahead of schedule. Overall Kingdom unemployment dropped from **5.8%** to **3.0%**. |
+| **Workforce & Private Sector** | **`14.0M`** | Total workforce reached **14.0M** (+8.7% YoY), with Saudi workers growing from **2.1M** to **3.2M**. Saudi employment shifted toward the private sector (**50.1%**) overtaking the public sector (**49.0%**). |
+| **Female Participation & Regions** | **`33.70%`** | Saudi female labor participation rose from **31.90%** to **33.70%**, progressing toward the revised **40%** 2030 target. Participation is highest in the Eastern Province (**71.2%**) and Riyadh (**70.5%**), vs. Jazan (**53.5%**). |
+| **Wages & Education Gap** | **`11K – 24K SAR`** | Average monthly wages scale sharply with education: **5K** (Secondary), **11K** (Bachelor's), **18K** (Master's), and **24K** (Doctorate). Unemployment among graduates concentrates in Business/Admin/Law (**28.8%**) and Education (**15.2%**). |
+
+---
+
+## Dashboard Pages & Visual Walkthrough
+
+### 1. Overview (`نظرة عامة`)
+> A comprehensive summary of key Saudi labor market indicators (2021–2026), tracking workforce headcount, employment rates, unemployment trends, and regional participation.
+
+![Overview Page](assets/01_overview.png)
+
+### 2. Workforce Distribution (`توزيع القوى العاملة`)
+> A detailed breakdown of workforce composition by nationality, major occupational groups, and economic activities, alongside wages, weekly working hours, and graduate unemployment by field of study.
+
+![Workforce Distribution](assets/02_workforce_distribution.png)
+
+### 3. Vision 2030 (`رؤية 2030`)
+> Tracks national workforce progress toward Saudi Vision 2030 milestones in lowering Saudi unemployment, expanding Saudization, and raising female and private-sector participation.
+
+![Vision 2030 Page](assets/03_vision_2030.png)
+
+---
+
+## Data Architecture & Technical Documentation
+
+* **Data Sources:** General Authority for Statistics (**GASTAT**) quarterly labor market releases and General Organization for Social Insurance (**GOSI**) datasets (Q1 2021 – Q2 2026).
+* **Data Modeling:** Built around a central DAX `Calender` dimension table and a custom disconnected **`Gender & Nationality`** parameter table (`DATATABLE`) enabling unified demographic filtering across wide-format fact tables without many-to-many ambiguity.
+* **Two-Tier DAX Architecture:** Separates base demographic `SWITCH` measures (`_... Value`) from visual-layer `LatestDate` wrappers, YoY time-intelligence calculations, dynamic Arabic chart titles, semantic KPI coloring, and first/last trend-line data labels.
+
+### Project Documentation
+* **DAX Measures & UX Layer:** [`docs/dax-measures.md`](docs/dax-measures.md)
+* **Power Query (M) ETL Pipeline:** [`docs/power-query-etl.md`](docs/power-query-etl.md)
+* **Arabic-to-English Data Dictionary:** [`data/data-dictionary.md`](data/data-dictionary.md)
+
+![Data Model](assets/data_model_star_schema.png)
+
+---
+
+## Analytical & Design Decisions
+
+* **Excluding Wage YoY % Change:** Although initially prototyped, Year-over-Year percentage change for monthly wages was intentionally excluded from KPI cards. Because baseline wages vary widely across demographic segments (as low as 2K–4K SAR for some groups), modest absolute shifts (e.g., ~200 SAR) produce exaggerated percentage swings (3%–10%) that can mislead non-technical audiences.
+* **Semantic Model Pruning:** Seven unused prototype sheets from an earlier Q1 2025 draft workbook were audited and removed from the final `.pbix` model to minimize memory footprint and maintain clean lineage.
+* **Clutter-Free Trend Visuals:** Vision 2030 line charts use custom DAX measures (`Label - First & Last`) to render data labels strictly on the first and last visible quarters of the selected time range.
+
+---
+
+## Repository Structure
+
+```text
+saudi-labor-market-powerbi/
+├── README.md                          # English documentation (Default)
+├── README.ar.md                       # Arabic documentation
+├── .gitignore                         # Ignore temporary Power BI & Excel lock files
+├── dashboard/
+│   └── Saudi_Labor_Market_2021_2026.pbix
+├── data/
+│   ├── raw/                           # Original GASTAT & GOSI Excel workbooks
+│   └── data-dictionary.md             # Arabic-to-English dataset & column dictionary
+├── docs/
+│   ├── dax-measures.md                # Full categorized DAX & UX documentation
+│   └── power-query-etl.md             # Power Query (M) ETL pipeline & cleaning steps
+└── assets/
+    ├── 01_overview.png                # Overview page screenshot
+    ├── 02_workforce_distribution.png  # Workforce Distribution screenshot
+    ├── 03_vision_2030.png             # Vision 2030 Tracker screenshot
+    └── data_model_star_schema.png     # Power BI Model view screenshot
