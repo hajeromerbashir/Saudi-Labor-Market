@@ -1,0 +1,38 @@
+# Power Query (M) ETL Documentation
+
+This document outlines the Extract, Transform, and Load (ETL) pipeline built in **Power Query** to clean, consolidate, and standardize raw **GASTAT** and **GOSI** Excel workbooks (Q1 2021 – Q2 2026) before loading them into the Power BI data model.
+
+## 1. ETL Pipeline Overview
+
+---
+| Stage | Key Transformations Applied |
+| :--- | :--- |
+| **Ingestion & Consolidation** | Combined multi-sheet annual workbooks (2021–2025) and quarterly-sheet workbooks (`القطاعات`, `التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى`, and `معدل البطالة للحاصلين على دبلوم فأعلى`) into unified fact tables using `Table.Combine` / Append Queries.
+| **Header & Row Cleanup** | Removed report title banners and trailing blank rows, promoted actual column headers (`Table.PromoteHeaders`), and filtered out null records. |
+| **Arabic Text Normalization** | Applied `Text.Trim` and `Text.Clean` across dimension columns and standardized inconsistent spellings across survey years (e.g., administrative region names and education labels). |
+| **Date & Type Standardization** | Cast quarterly date keys (`الربع`) to `type date` to establish clean one-to-many relationships with the central `Calender` table, and enforced numeric types on all rate/count columns. |
+| **Model Optimization** | Disabled load (`Enable Load = Off`) for staging queries and removed legacy unused sheets to keep the `.pbix` footprint lightweight. |
+
+---
+
+## 2. Key M-Code Snippets
+
+### A. Multi-Sheet Quarterly Consolidation (Example: `القطاعات`)
+*Dynamically reads all quarterly tabs from the workbook, promotes headers per sheet, appends them into one table, and enforces data types.*
+
+```powerquery
+let
+    Source = Excel.Workbook(File.Contents(FilePath & "القطاعات"), null, true),
+    FilteredSheets = Table.SelectRows(Source, each [Kind] = "Sheet"),
+    CleanedSheets = Table.TransformColumns(
+        FilteredSheets,
+        {"Data", each Table.PromoteHeaders(_, [PromoteAllScalars=true])}
+    ),
+    ExpandedData = Table.Combine(CleanedSheets[Data]),
+    TrimmedText = Table.TransformColumns(ExpandedData, {{"النشاط الاقتصادي", Text.Trim, type text}}),
+    TypedColumns = Table.TransformColumnTypes(TrimmedText, {
+        {"الربع", type date}
+        // Add remaining numeric column types from your Advanced Editor
+    })
+in
+    TypedColumns
