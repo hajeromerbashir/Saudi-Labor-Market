@@ -1,0 +1,122 @@
+** All YoY measures compare the latest available quarter in the current filter context against the same quarter in the prior year (CurrentYear - 1). 
+Percentage-growth metrics use DIVIDE, while rate-based metrics return percentage-point differences (CurrentValue - PreviousValue).
+
+##1  _YOY num GOSI (% Growth)
+
+_YOY num GOSI = 
+VAR LatestDate     = CALCULATE(MAX('أرقام GOSI'[الربع]))
+VAR CurrentYear    = YEAR(LatestDate)
+VAR CurrentQuarter = QUARTER(LatestDate)
+VAR CurrentValue = 
+    CALCULATE(
+        [_GOSI Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+VAR PreviousValue = 
+    CALCULATE(
+        [_GOSI Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear - 1,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+RETURN
+DIVIDE(CurrentValue - PreviousValue, PreviousValue)
+
+##2  _YOY num Participation (Percentage Point Change)
+
+_YOY num Participation = 
+VAR LatestDate     = CALCULATE(MAX('معدل المشاركة'[الربع]))
+VAR CurrentYear    = YEAR(LatestDate)
+VAR CurrentQuarter = QUARTER(LatestDate)
+VAR CurrentValue = 
+    CALCULATE(
+        [_Total Participation Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+VAR PreviousValue = 
+    CALCULATE(
+        [_Total Participation Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear - 1,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+RETURN 
+CurrentValue - PreviousValue
+
+##3 _YOY num Unemployment (Percentage Point Change)
+
+_YOY num Unemployment = 
+VAR LatestDate     = CALCULATE(MAX('البطالة'[الربع]))
+VAR CurrentYear    = YEAR(LatestDate)
+VAR CurrentQuarter = QUARTER(LatestDate)
+VAR CurrentValue = 
+    CALCULATE(
+        [_Total Unemployment Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+VAR PreviousValue = 
+    CALCULATE(
+        [_Total Unemployment Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear - 1,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+RETURN 
+CurrentValue - PreviousValue
+
+
+##4 _YOY SA Unemployment (Percentage Point Change)
+
+_YOY SA Unemployment = 
+VAR LatestDate     = CALCULATE(MAX('البطالة'[الربع]))
+VAR CurrentYear    = YEAR(LatestDate)
+VAR CurrentQuarter = QUARTER(LatestDate)
+VAR CurrentValue = 
+    CALCULATE(
+        [_SA Unemployment Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+VAR PreviousValue = 
+    CALCULATE(
+        [_SA Unemployment Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear - 1,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+RETURN 
+CurrentValue - PreviousValue
+
+##4 _YOY PrivetSector (Percentage Point Change)
+
+_YOY PrivetSector = 
+VAR LatestDate     = CALCULATE(MAX('قطاع خاص'[الربع]))
+VAR CurrentYear    = YEAR(LatestDate)
+VAR CurrentQuarter = QUARTER(LatestDate)
+VAR CurrentValue = 
+    CALCULATE(
+        [_PrivateSector Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+VAR PreviousValue = 
+    CALCULATE(
+        [_PrivateSector Value],
+        REMOVEFILTERS(Calender),
+        Calender[Year] = CurrentYear - 1,
+        Calender[Quarter Number] = CurrentQuarter
+    )
+RETURN 
+CurrentValue - PreviousValue
+
+
+
+
