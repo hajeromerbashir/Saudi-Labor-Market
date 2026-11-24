@@ -67,8 +67,43 @@ SWITCH(
 )
 
 
+## _Non SA Privet Sector Value & _Non SA Public Sector Value
+Track Non-Saudi share across private and public sectors.
+
+_Non SA Privet Sector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "غير سعوديين - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "غير سعوديين - ذكور", MAX('قطاع خاص'[غير سعوديين -  ذكور]),
+    SelectedGroup = "غير سعوديين - إناث", MAX('قطاع خاص'[غير سعوديين -  إناث]),
+    MAX('قطاع خاص'[غير سعوديين -  إجمالي])
+)
 
 
+_Non SA Public Sector Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "غير سعوديين - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "غير سعوديين - ذكور", MAX('قطاع عام'[غير سعوديين -  ذكور]),
+    SelectedGroup = "غير سعوديين - إناث", MAX('قطاع عام'[غير سعوديين -  إناث]),
+    MAX('قطاع عام'[غير سعوديين -  إجمالي])
+)
+
+
+## _Saudization Value
+Returns the Saudization percentage in targeted economic sectors.
+
+_Saudization Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedGroup = "سعوديون - ذكور", MAX('القطاعات'[سعوديون - ذكور %]),
+    SelectedGroup = "سعوديون - إناث", MAX('القطاعات'[سعوديون - إناث %]),
+    MAX('القطاعات'[سعوديون - إجمالي %])
+)
 
 
 
