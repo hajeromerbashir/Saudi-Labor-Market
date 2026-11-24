@@ -55,9 +55,9 @@
 * **نمذجة البيانات وهندسة الـ DAX:** تصميم جدول تقويم مركزي (`Calender`) وجدول أبعاد مخصص (`Gender & Nationality`) لإدارة التصفية الديناميكية عبر الجنسية والجنس بهندسة DAX من طبقتين (مقاييس أساسية ومقاييس عرض زمني)، مع عناوين تفاعلية وتنسيق شرطي ذكي وتسميات لأول وآخر ربع فقط على خطوط الاتجاه.
 
 ### ملفات التوثيق (باللغة الإنجليزية)
-* **توثيق معادلات DAX وطبقة تجربة المستخدم: ** [`Saudi-Labor-Market/dax.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)
-* **خطوات التنظيف والدمج في Power Query: ** [`Saudi-Labor-Market/power-query-etl.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview)]
-* **قاموس البيانات العربية ومسميات الأعمدة: ** [`Saudi-Labor-Market/dataset/# Data Dictionary & Dataset Description.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/dataset/%23%20Data%20Dictionary%20%26%20Dataset%20Descriptions)
+                                      [`Saudi-Labor-Market/dax.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/dax)                             :توثيق معادلات DAX وطبقة تجربة المستخدم** *
+ [`Saudi-Labor-Market/power-query-etl.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/power%20query/%23%201.%20ETL%20Pipeline%20Overview)]    :Power Query خطوات التنظيف والدمج في ** *
+ * **قاموس البيانات العربية ومسميات الأعمدة: ** [`Saudi-Labor-Market/dataset/# Data Dictionary & Dataset Description.md`](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/dataset/%23%20Data%20Dictionary%20%26%20Dataset%20Descriptions)
 
 ---
 
