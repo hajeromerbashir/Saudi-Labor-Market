@@ -6,11 +6,6 @@
 
 # Saudi Labor Market Transformation Dashboard (2021–2026)
 
-![images]([https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black](https://github.com/hajeromerbashir/Saudi-Labor-Market/tree/main/images))
-![DAX](https://img.shields.io/badge/DAX-Dynamic%20Measures-1D623D?style=for-the-badge)
-![Power Query](https://img.shields.io/badge/Power%20Query-ETL-2E936C?style=for-the-badge)
-![Vision 2030](https://img.shields.io/badge/Saudi%20Vision-2030-005430?style=for-the-badge)
-
 An end-to-end **Power BI** analytics project tracking the structural evolution of the **Saudi Labor Market from Q1 2021 to Q2 2026** and evaluating national progress against **Saudi Vision 2030** targets.
 
 ---
@@ -28,7 +23,7 @@ This dashboard is designed for both general audiences and executive stakeholders
 | Pillar | Headline Metric | Strategic Insight |
 | :--- | :---: | :--- |
 | **Saudi Unemployment** | **`6.50%`** | Declined from **12.17%** (Q1 2021) to **6.50%** (Q2 2026), surpassing the Vision 2030 target of **7%** ahead of schedule. Overall Kingdom unemployment dropped from **5.8%** to **3.0%**. |
-| **Workforce & Private Sector** | **`14.0M`** | Total workforce reached **14.0M** (+8.7% YoY), with Saudi workers growing from **2.1M** to **3.2M**. Saudi employment shifted toward the private sector (**50.1%**) overtaking the public sector (**49.0%**). |
+| **Workforce & Private Sector** | **`14.0M`** | Total workforce reached **14.0M** (+8.7% YoY), with Saudi workers growing from **2.1M** to **3.2M**. Saudi employment shifted toward the private sector (**50.1%**), overtaking the public sector (**49.0%**). |
 | **Female Participation & Regions** | **`33.70%`** | Saudi female labor participation rose from **31.90%** to **33.70%**, progressing toward the revised **40%** 2030 target. Participation is highest in the Eastern Province (**71.2%**) and Riyadh (**70.5%**), vs. Jazan (**53.5%**). |
 | **Wages & Education Gap** | **`11K – 24K SAR`** | Average monthly wages scale sharply with education: **5K** (Secondary), **11K** (Bachelor's), **18K** (Master's), and **24K** (Doctorate). Unemployment among graduates concentrates in Business/Admin/Law (**28.8%**) and Education (**15.2%**). |
 
