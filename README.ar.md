@@ -48,7 +48,7 @@
 [Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030.png)
 
 ### 4. نموذج البيانات
-[Data Model](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG))
+[Data Model](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/data%20model%20PBI.PNG)
 
 
 ---
