@@ -1,0 +1,66 @@
+## _Total Unemployment Value
+Dynamically evaluates the unemployment rate using separate Nationality and Gender slicer contexts.
+
+_Total Unemployment Value =
+VAR SelectedNat = SELECTEDVALUE('Gender & Nationality'[Nationality], "الكل")
+VAR SelectedGen = SELECTEDVALUE('Gender & Nationality'[Gender], "إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    SelectedNat = "سعوديون"     && SelectedGen = "ذكور",   MAX('البطالة'[سعوديون - ذكور]),
+    SelectedNat = "سعوديون"     && SelectedGen = "إناث",   MAX('البطالة'[سعوديون - إناث]),
+    SelectedNat = "سعوديون"     && SelectedGen = "إجمالي", MAX('البطالة'[سعوديون - إجمالي]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "ذكور",   MAX('البطالة'[غير سعوديين - ذكور]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "إناث",   MAX('البطالة'[غير سعوديين - إناث]),
+    SelectedNat = "غير سعوديين" && SelectedGen = "إجمالي", MAX('البطالة'[غير سعوديين - إجمالي]),
+    MAX('البطالة'[الإجمالي - الكل])
+)
+
+## _SA Unemployment Value
+Returns Saudi-only unemployment and blanks out if Non-Saudis are selected.
+
+_SA Unemployment Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
+RETURN
+SWITCH(
+    TRUE(),
+    CONTAINSSTRING(SelectedGroup, "غير سعوديين"), BLANK(),
+    SelectedGroup = "سعوديون - ذكور", MAX('البطالة'[سعوديون - ذكور]),
+    SelectedGroup = "سعوديون - إناث", MAX('البطالة'[سعوديون - إناث]),
+    MAX('البطالة'[سعوديون - إجمالي])
+)
+
+## _Unemployment Dist by Major Value
+Relative distribution of unemployed individuals (Diploma and above) by academic field. 
+
+_Unemployment Dist by Major Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[سعوديون - ذكور %]),
+    "سعوديون - إناث",        MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[سعوديون - إناث %]),
+    "سعوديون - إجمالي",      MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[سعوديون - إجمالي % ]),
+    "غير سعوديين - ذكور",    MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  ذكور % ]),
+    "غير سعوديين - إناث",    MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  إناث %]),
+    "غير سعوديين - إجمالي",  MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  إجمالي %]),
+    MAX('التوزيع النسبي للبطالة للحاصلين على دبلوم فأعلى'[إجمالي  - الكل %])
+)
+
+## _Unemployment Rate by Major Value
+Unemployment rate among graduates (Diploma and above) segmented by academic major.
+
+_Unemployment Rate by Major Value = 
+VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
+RETURN
+SWITCH(
+    SelectedGroup,
+    "سعوديون - ذكور",        MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[سعوديون - ذكور]),
+    "سعوديون - إناث",        MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[سعوديون - إناث]),
+    "سعوديون - إجمالي",      MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[سعوديون - إجمالي]),
+    "غير سعوديين - ذكور",    MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  ذكور]),
+    "غير سعوديين - إناث",    MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  إناث]),
+    "غير سعوديين - إجمالي",  MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[غير سعوديين -  إجمالي]),
+    MAX('معدل البطالة للحاصلين على دبلوم فأعلى'[إجمالي  - الكل])
+)
+
