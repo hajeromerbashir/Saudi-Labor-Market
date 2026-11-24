@@ -47,6 +47,7 @@ VAR PreviousValue =
 RETURN 
 CurrentValue - PreviousValue
 
+
 ##3 _YOY num Unemployment (Percentage Point Change)
 
 _YOY num Unemployment = 
@@ -93,6 +94,7 @@ VAR PreviousValue =
     )
 RETURN 
 CurrentValue - PreviousValue
+
 
 ##4 _YOY PrivetSector (Percentage Point Change)
 
