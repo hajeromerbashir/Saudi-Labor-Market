@@ -1,4 +1,4 @@
-**_Employment Rate Value**
+## _Employment Rate Value
 Dynamically selects the employment rate column based on independent Nationality and Gender slicer selections, defaulting Gender to `"إجمالي"` when unfiltered.
 ```dax
 _Employment Rate Value = 
@@ -16,7 +16,7 @@ SWITCH(
     MAX('نسبة التوظيف'[الإجمالي -  الكل])
 )
 
-**_GOSI Value**
+## _GOSI Value
 Returns the number of GOSI-registered workers matching the selected demographic group.
 _GOSI Value = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
@@ -32,7 +32,7 @@ SWITCH(
     MAX('أرقام GOSI'[الإجمالي - الكل])
 )
 
-**_LaborForceDist Value**
+## _LaborForceDist Value
 Returns the relative distribution of the population in/outside the labor force for the selected group.
 _LaborForceDist Value = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
@@ -48,7 +48,7 @@ SWITCH(
     MAX('التوزيع النسبي لقوة العمل'[إجمالي  - الكل])
 )
 
-**_Total Participation Value**
+## _Total Participation Value
 Returns the labor force participation rate across all nationality and gender combinations. (Fixed Non-Saudi Male column reference.)
 _Total Participation Value = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
@@ -64,7 +64,7 @@ SWITCH(
     MAX('معدل المشاركة'[إجمالي  - الكل])
 )
 
-**_ SA Participation Value**
+## _ SA Participation Value
 Isolates the Saudi labor force participation rate for Vision 2030 tracking visuals.
 _ SA Participation Value = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "سعوديون - إجمالي")
@@ -76,7 +76,7 @@ SWITCH(
     MAX('معدل المشاركة'[سعوديون - إجمالي])
 )
 
-**_Wages Value**
+## _Wages Value
 Returns the average monthly wage (SAR) by selected nationality and gender.
 _Wages Value = 
 VAR SelectedGroup = SELECTEDVALUE('Gender & Nationality'[Combined], "الإجمالي - الكل")
@@ -91,10 +91,6 @@ SWITCH(
     "غير سعوديين - إجمالي",  MAX('متوسط الأجر الشهري حسب الجنسية'[غير سعوديين -  إجمالي]),
     MAX('متوسط الأجر الشهري حسب الجنسية'[إجمالي  - الكل])
 )
-
-
-
-
 
 
 
