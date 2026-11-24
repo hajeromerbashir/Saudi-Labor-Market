@@ -34,17 +34,17 @@ This dashboard is designed for both general audiences and executive stakeholders
 ### 1. Overview (`نظرة عامة`)
 > A comprehensive summary of key Saudi labor market indicators (2021–2026), tracking workforce headcount, employment rates, unemployment trends, and regional participation.
 
-![Overview Page]([assets/01_overview.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview))
+![Overview Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/01_overview)
 
 ### 2. Workforce Distribution (`توزيع القوى العاملة`)
 > A detailed breakdown of workforce composition by nationality, major occupational groups, and economic activities, alongside wages, weekly working hours, and graduate unemployment by field of study.
 
-![Workforce Distribution]([assets/02_workforce_distribution.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution))
+![Workforce Distribution](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/02_workforce_distribution)
 
 ### 3. Vision 2030 (`رؤية 2030`)
 > Tracks national workforce progress toward Saudi Vision 2030 milestones in lowering Saudi unemployment, expanding Saudization, and raising female and private-sector participation.
 
-![Vision 2030 Page]([assets/03_vision_2030.png](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030))
+![Vision 2030 Page](https://github.com/hajeromerbashir/Saudi-Labor-Market/blob/main/images/03_vision_2030)
 
 ---
 
